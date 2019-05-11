@@ -254,7 +254,7 @@ export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
 #
 # This directory contains the logs for secure and privileged processes.
 # Java property: hadoop.log.dir
-# export HADOOP_SECURE_LOG=${HADOOP_LOG_DIR}
+export HADOOP_SECURE_LOG=${HADOOP_LOG_DIR}
 
 #
 # When running a secure daemon, the default value of HADOOP_IDENT_STRING
@@ -271,7 +271,7 @@ export HADOOP_OS_TYPE=${HADOOP_OS_TYPE:-$(uname -s)}
 # messages. For non-namenode daemons, the Java property must be set in
 # the appropriate _OPTS if one wants something other than INFO,NullAppender
 # Java property: hdfs.audit.logger
-# export HDFS_AUDIT_LOGGER=INFO,NullAppender
+export HDFS_AUDIT_LOGGER=INFO,NullAppender
 
 # Specify the JVM options to be used when starting the NameNode.
 # These options will be appended to the options specified as HADOOP_OPTS

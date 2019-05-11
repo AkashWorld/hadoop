@@ -111,6 +111,31 @@ hadoop_uservar_su hdfs datanode "${HADOOP_HDFS_HOME}/bin/hdfs" \
     datanode ${dataStartOpt}
 (( HADOOP_JUMBO_RETCOUNTER=HADOOP_JUMBO_RETCOUNTER + $? ))
 
+DN_DIR_PREFIX="/home/akash/Projects/HadoopNamespace/dn"
+
+if [ -z $DN_DIR_PREFIX ]; then
+echo $0: DN_DIR_PREFIX is not set. set it to something like "/hadoopTmp/dn"
+exit 1
+fi
+
+run_datanode () {
+DN=$1
+export HADOOP_LOG_DIR=$DN_DIR_PREFIX$DN/logs
+export HADOOP_PID_DIR=$HADOOP_LOG_DIR
+DN_CONF_OPTS="\
+-Dhadoop.tmp.dir=$DN_DIR_PREFIX$DN \
+-Ddfs.datanode.address=0.0.0.0:5001$DN \
+-Ddfs.datanode.http.address=0.0.0.0:5008$DN \
+-Ddfs.datanode.ipc.address=0.0.0.0:5002$DN"
+echo $DN_CONF_OPTS
+${HADOOP_HOME}/bin/hdfs --daemon start datanode $DN_CONF_OPTS
+}
+
+for i in {1..9}
+do
+    run_datanode $i
+done
+
 #---------------------------------------------------------
 # secondary namenodes (if any)
 
